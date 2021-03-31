@@ -1,32 +1,22 @@
-export const forEachCb = (element) => {
-  return element * 2;
-};
-export const mapCb = (element) => {
-  return element * 2;
-};
-export const filterCb = (element) => {
-  if (element > 3) {
-    return true;
-  } else {
-    return false;
-  }
-};
-export const everyCb = (element) => {
-  if (element >= 4) {
-    return true;
-  } else {
-    return false;
-  }
-};
-export const someCb = (element) => {
-  if (element > 5) {
-    return true;
-  } else {
-    return false;
-  }
-};
-export const reduceCb = (number1, number2) => {
-  return number1 + number2;
+export const alphabet = 'abcdefghijklmnoprstuwxyz'.split('');
+
+export const getRandomNumberWithRange = (min, max) => {
+  const maxValue = max + 1;
+  const randomNumber = Math.floor(Math.random() * (maxValue - min) + min);
+  return randomNumber;
 };
 
-export const exampleArray = [3, 4, 5, 5, 4];
+export const addFn = (prevValue, currValue) => {
+  return prevValue + currValue;
+};
+
+export const getRandomLengths = (array, min, max) => {
+  const randomLenghts = [];
+  while (randomLenghts.reduce(addFn, 0) !== array.length) {
+    randomLenghts.push(getRandomNumberWithRange(min, max));
+    if (randomLenghts.reduce(addFn, 0) > 24) {
+      randomLenghts.length = 0;
+    }
+  }
+  return randomLenghts;
+};
