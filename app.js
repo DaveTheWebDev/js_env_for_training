@@ -1,4 +1,4 @@
-import { alphabet } from './task/utilis';
-import { aggregateIntoChunks } from './task/index';
+import { inputData } from './task/utilis';
+import { findPharseInArray } from './task/index';
 
-aggregateIntoChunks(alphabet);
+findPharseInArray(inputData, 'dup');
