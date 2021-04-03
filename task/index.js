@@ -1,28 +1,34 @@
-export const findPharseInArray = (array, pharse) => {
-  const results = []
-  array.filter((word, id) => {
-    const wordToPush = word.toLowerCase().includes(pharse.toLowerCase())
-    if (wordToPush) {
-        results.push([id,  word])
-      }
-    })
-    if (results.length === 0) {
-      results.push({message: "No word includes given pharse"})
-    }
-    console.log(results)
-  return results
+const generateArrayWithRandomNumbers = (
+  howManyNumbers = 10,
+  min = 1,
+  max = 10
+) => {
+  const randomNumbers = [];
+  const minRange = min;
+  const maxRange = max + 1;
+  for (let index = 0; index < howManyNumbers; index++) {
+    const randomNumber = Math.floor(
+      Math.random() * (maxRange - minRange) + minRange
+    );
+    randomNumbers.push(randomNumber);
+  }
+  return randomNumbers;
 };
 
-// export const findPharseInArray = (array, pharse) => {
-//   let results = array.reduce((accumulator, currentValue, currentIndex) => {
-//     if (currentValue.toLowerCase().includes(pharse.toLowerCase())) {
-//       accumulator.push({place: currentIndex, word: currentValue})
-//     }
-//     return accumulator
-//   }, [])
-//   if (results.length === 0) {
-//     results.push({message: "No word includes given pharse"})
-//   }
-//   console.log(results)
-//   return results
-// };
+const generateArraysOfArrays = (
+  howManyArrays = 10,
+  howManyNumbers,
+  min,
+  max
+) => {
+  const numbersArray = [];
+  for (let index = 0; index < howManyArrays; index++) {
+    const randomNumbers = generateArrayWithRandomNumbers(
+      howManyNumbers,
+      min,
+      max
+    );
+    numbersArray.push(randomNumbers);
+  }
+  return numbersArray;
+};
