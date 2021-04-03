@@ -1,1 +1,0 @@
-export const inputData = ["stwórz", "sobie", "tutaj", "więcej", "wyrazów", "TUTAJ", 'co', 'tam', 'zamek', 'dupa', 'dup', 'dawid', 'koks', 'moje', 'szary']
