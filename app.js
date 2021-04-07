@@ -1,26 +1,46 @@
-const data = ['a', 'b', 'c', 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16];
-const settings1 = {
-  actualPageIndex: 5,
-  entriesOnPage: 3,
-};
-const paginateArray = (array, settings) => {
-  const maxEntries = settings.entriesOnPage;
-  const entriesOnSelectedPage = [];
-  const arrayCopy = [...array];
-  for (let index = 0; index < arrayCopy.length; index + maxEntries) {
-    let page = null;
-    if (index - maxEntries < 0) {
-      page = arrayCopy.splice(index, maxEntries - index);
-    } else {
-      page = arrayCopy.splice(index, maxEntries);
-    }
-    entriesOnSelectedPage.push(page);
-  }
-  if (entriesOnSelectedPage[settings.actualPageIndex]) {
-    return entriesOnSelectedPage[settings.actualPageIndex].length;
-  } else {
-    throw new Error('There is no such page');
-  }
+const mapCb = (x) => x * 2;
+const arr = [2, 3, 4, 5];
+const mapFn = (array, cb) => {
+  return array.reduce((acc, val) => {
+    acc.push(cb(val));
+    return acc;
+  }, []);
 };
 
-console.log(paginateArray(data, settings1));
+// console.log(mapFn(arr, mapCb));
+
+const filterCb = (x) => x > 3;
+const filterFn = (array, cb) => {
+  return array.reduce((acc, val) => {
+    if (cb(val)) {
+      acc.push(val);
+    }
+    return acc;
+  }, []);
+};
+
+// console.log(filterFn(arr, filterCb));
+
+const everyCb = (x) => x > 1;
+const everyFn = (array, cb, id) => {
+  return array.reduce((acc, val) => {
+    if (!cb(val)) {
+      acc = false;
+    }
+    return acc;
+  }, true);
+};
+
+// console.log(everyFn(arr, everyCb));
+
+const someCb = (x) => x > 10;
+const someFn = (array, cb) => {
+  return array.reduce((acc, val) => {
+    if (cb(val)) {
+      acc = true;
+    }
+    return acc;
+  }, false);
+};
+
+console.log(someFn(arr, someCb));
