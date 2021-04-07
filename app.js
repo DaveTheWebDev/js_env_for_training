@@ -1,183 +1,23 @@
-const data = [
-  {
-    _id: '5e985a07feddae7617ac44f6',
-    age: 24,
-    eyeColor: 'brown',
-    name: 'Cummings Baxter',
-    gender: 'male',
-    company: 'VELOS',
-    email: 'cummingsbaxter@velos.com',
-    phone: '+1 (907) 482-2451',
-    tags: ['labore', 'elit', 'excepteur', 'nisi', 'mollit', 'anim', 'aliquip'],
-    friends: [
-      {
-        id: 0,
-        name: 'Sheppard Jensen',
-      },
-    ],
-  },
-  {
-    _id: '5e985a0709dfa1e6fd93c6ad',
-    age: 32,
-    eyeColor: 'brown',
-    name: 'Madelyn Dickson',
-    gender: 'female',
-    company: 'KENGEN',
-    email: 'madelyndickson@kengen.com',
-    phone: '+1 (984) 521-2439',
-    tags: ['nisi', 'veniam', 'dolore', 'officia', 'ex', 'non', 'pariatur'],
-    friends: [
-      {
-        id: 0,
-        name: 'Bruce Barton',
-      },
-      {
-        id: 1,
-        name: 'Juliet Schmidt',
-      },
-      {
-        id: 2,
-        name: 'Horton Haley',
-      },
-      {
-        id: 3,
-        name: 'Herminia Witt',
-      },
-    ],
-  },
-  {
-    _id: '5e985a0737e2306e9aef6ecd',
-    age: 26,
-    eyeColor: 'blue',
-    name: 'Mcguire Mercado',
-    gender: 'male',
-    company: 'LINGOAGE',
-    email: 'mcguiremercado@lingoage.com',
-    phone: '+1 (963) 450-2194',
-    tags: ['cupidatat', 'occaecat', 'amet', 'qui', 'elit', 'esse', 'deserunt'],
-    friends: [
-      {
-        id: 0,
-        name: 'Loraine Harper',
-      },
-      {
-        id: 1,
-        name: 'Luann Randall',
-      },
-      {
-        id: 2,
-        name: 'Obrien Rich',
-      },
-      {
-        id: 3,
-        name: 'Noble Wilkerson',
-      },
-    ],
-  },
-  {
-    _id: '5e985a07148cfba58c860ec2',
-    age: 26,
-    eyeColor: 'brown',
-    name: 'Marina Porter',
-    gender: 'female',
-    company: 'GORGANIC',
-    email: 'marinaporter@gorganic.com',
-    phone: '+1 (867) 417-3497',
-    tags: [
-      'laborum',
-      'aliquip',
-      'sit',
-      'adipisicing',
-      'aute',
-      'cupidatat',
-      'aliquip',
-    ],
-    friends: [
-      {
-        id: 0,
-        name: 'Blair Hill',
-      },
-      {
-        id: 1,
-        name: 'Ebony Jimenez',
-      },
-    ],
-  },
-  {
-    _id: '5e985a074984f9f08ccaaa4c',
-    age: 25,
-    eyeColor: 'green',
-    name: 'Barlow Ferguson',
-    gender: 'male',
-    company: 'TOYLETRY',
-    email: 'barlowferguson@toyletry.com',
-    phone: '+1 (837) 484-2231',
-    tags: ['est', 'dolor', 'minim', 'ut', 'anim', 'culpa', 'non'],
-    friends: [
-      {
-        id: 0,
-        name: 'Delacruz Acevedo',
-      },
-      {
-        id: 1,
-        name: 'Gloria Tanner',
-      },
-      {
-        id: 2,
-        name: 'Cantrell Myers',
-      },
-      {
-        id: 3,
-        name: 'Fisher Leonard',
-      },
-    ],
-  },
-];
-
-// const filterWith = (arr, pharse) => {
-//   const regexp = new RegExp(pharse, 'gi');
-//   if (Array.isArray(arr)) {
-//     arr.forEach((element, id) => {
-//       if (typeof element === 'object' && element !== null) {
-//         const objectValues = Object.values(element)
-//         filterWith(objectValues, pharse)
-//       } else if (Array.isArray(element)) {
-//         const result = element.filter(el => {
-//           if (typeof el === 'string') {
-//             filterWith(el, pharse)
-//           }
-//         })
-//       }
-//     });
-//   }
-// };
+import data from './task/utilis';
+import { checkTypeAndMatch } from './task/index';
 
 const filterWith = (arr, pharse) => {
+  if (pharse.length <= 2) return [];
+  if (!Array.isArray(arr) || !arr.length)
+    throw new Error(`First argument should be array with content`);
+
+  const finalResult = filterData(arr, pharse);
+  if (finalResult.length === 0)
+    throw new Error(`Can't find '${pharse}' pharse in given array`);
+  else return finalResult;
+};
+
+const filterData = (data, pharse) => {
   const regExp = new RegExp(pharse, 'gi');
-  if (pharse.length < 2) return [];
-  if (!Array.isArray(arr)) throw new Error(`First argument should be array`);
-  filterData(arr, regExp);
+  const filteredData = data.filter((obj) => {
+    return checkTypeAndMatch(obj, regExp);
+  });
+  return filteredData;
 };
 
-const filterData = (data, regExp) => {
-  if (typeof data === 'string') {
-    if (data.match(regExp)) {
-      console.log(data);
-      return data.match(regExp).length > 0;
-    }
-  } else if (typeof data === 'number') {
-    if (data.toString().match(regExp)) {
-      console.log(data);
-      return data.toString().match(regExp).length > 0;
-    }
-  } else if (Array.isArray(data)) {
-    const result = data.filter((element) => filterData(element, regExp));
-  } else {
-    const obejctValues = Object.values(data);
-    const result = obejctValues.filter((element) =>
-      filterData(element, regExp)
-    );
-  }
-};
-
-filterWith(data, 'nisi');
+console.log(filterWith(data, 'bro'));
