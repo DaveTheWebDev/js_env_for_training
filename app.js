@@ -1,23 +1,26 @@
-import data from './task/utilis';
-import { checkTypeAndMatch } from './task/index';
-
-const filterWith = (arr, pharse) => {
-  if (pharse.length <= 2) return [];
-  if (!Array.isArray(arr) || !arr.length)
-    throw new Error(`First argument should be array with content`);
-
-  const finalResult = filterData(arr, pharse);
-  if (finalResult.length === 0)
-    throw new Error(`Can't find '${pharse}' pharse in given array`);
-  else return finalResult;
+const data = ['a', 'b', 'c', 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16];
+const settings1 = {
+  actualPageIndex: 5,
+  entriesOnPage: 3,
+};
+const paginateArray = (array, settings) => {
+  const maxEntries = settings.entriesOnPage;
+  const entriesOnSelectedPage = [];
+  const arrayCopy = [...array];
+  for (let index = 0; index < arrayCopy.length; index + maxEntries) {
+    let page = null;
+    if (index - maxEntries < 0) {
+      page = arrayCopy.splice(index, maxEntries - index);
+    } else {
+      page = arrayCopy.splice(index, maxEntries);
+    }
+    entriesOnSelectedPage.push(page);
+  }
+  if (entriesOnSelectedPage[settings.actualPageIndex]) {
+    return entriesOnSelectedPage[settings.actualPageIndex].length;
+  } else {
+    throw new Error('There is no such page');
+  }
 };
 
-const filterData = (data, pharse) => {
-  const regExp = new RegExp(pharse, 'gi');
-  const filteredData = data.filter((obj) => {
-    return checkTypeAndMatch(obj, regExp);
-  });
-  return filteredData;
-};
-
-console.log(filterWith(data, 'bro'));
+console.log(paginateArray(data, settings1));
